@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Random Quotes</title>
-  <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-  <div class="container">
-    <div id="quote-box">
-      <p class="quote">You can do anything but not everything</p>
-      <p class="source">David Allen<span class="citation">Making It All Work</span><span class="year">2009</span></p>
-    </div>
-    <button id="loadQuote">Show another quote</button>
-  </div>
-  <script src="js/script.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Random Quotes</title>
+        <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body id='bodyContainer'>
+        <div id='bkgd'>
+            <style>#bodyContainer {background-color: #00BCD4; width: 100%; height: 100%;}</style>
+        </div>
+        <div id='quoteContainer'>
+            <div id='quoteItem'>
+                <p class='quote'>"The innovator's motto is this; I succeed or I learn, but I never fail."</p>
+                <p class='source'>-Paul Sloane<span class='nationality'>Scottish</span>
+                <span class='profession'>Author/Speaker</span><span class ='birth'>5/3/1950</span>
+                <span class='death'>living still</span></p>
+                <p class='citation'>GoodReads.com, Good Reads, Inc. 2016. http://www.goodreads.com/...<span class='dateAccessed'>5/19/2016</span></p>
+                <style>#quoteItem {background-color: #BCD400; color: #D400BC; box-shadow: 10px 10px 30px #D400BC;}</style>
+            </div>
+        </div>
+        <div id='btnContainer'>
+            <button id="loadItem" onclick="getRandomQuote()">Show Another Quote</button>
+            <button id="streamItem" onclick="streamRandomQuotes()">Stream Quotes</button>
+        </div>
+        <footer></footer>
+        <script src="js/script.js"></script>
+    </body>
 </html>

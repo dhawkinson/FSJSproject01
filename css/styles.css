@@ -1,91 +1,219 @@
-body {
-  /*text-align: center;*/
-  background-color: #36b55c;
-  color: white;
-  font-family: 'Playfair Display', serif;
+body {         /*      background color randomly set   */  
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 100%;
 }
-#quote-box {
-  position: absolute;
-  top: 20%;
-  left: 10%;
-  right: 10%;
-  width: 80%;
-  line-height: .5;
+
+/*******************************
+
+    Establish Flexbox Structure - Vertical
+
+    1. Avoid the IE 10-11 `min-height` bug.
+    2. Set `flex-shrink` to `0` to prevent some browsers from
+       letting these items shrink to smaller than their content's default
+       minimum size. See http://bit.ly/1Mn35US for details.
+    3. Use `%` instead of `vh` since `vh` is buggy in older mobile Safari.
+
+*******************************/
+#bodyContainer {           /* the body */
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100%;          /* 1, 3 */
+}
+
+#quoteContainer,            /* contains the quote text */
+#btnContainer {             /* contains the buttons (load & stream) */
+    flex: 0 0 auto;         /* 2 */
+    width:80%;
+    padding: 5%;
+    overflow: auto;
+}
+
+/*******************************
+
+    Establish Flexbox Structure - Horizontal
+
+*******************************/
+
+#quoteContainer {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+#quoteItem {    /* comprised of quote, source & cotation */
+    flex: 0 0 auto;
+}
+
+#btnContainer {    /* contains load * stream buttons */
+    display: inline-flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+}
+
+#loadItem,          /* button shows quotes 1/click */
+#streamItem {       /* button streams all/click */
+    flex: 0 0 auto;
+}
+
+/********************************
+
+    Styling
+
+********************************/
+
+#quoteItem {     /*      colors of background, text and shadow randomly set   */
+    -webkit-filter: brightness(1.5) saturate(1);
+    filter: brightness(1.5) saturate(1);
+    border-radius: 10px;
 }
 .quote {
-  font-size: 4rem;
-  font-weight: 400;
-  line-height: 1.1;
-  position: relative;
-  margin: 0;
-  } 
-.quote:before, .quote:after {
-  font-size: 6rem;
-  line-height: 2.5rem;
-  position: absolute;
-}
-.quote:before {
-  content: "“";
-  top: .25em;
-  left: -.5em;
-}
-.quote:after {
-  content: "”";
-  bottom: -.1em;
-  margin-left: .1em;
-  position: absolute;
-}
+    font-size: 1.2rem;
+    line-height: 1.3;
+    text-align: center;
+    width:90%;
+    margin-left: 5%;
+} 
+
 .source {
-  font-size: 1.25rem;;
-  letter-spacing: 0.05em;
-  line-height: 1.1;
-  text-align: right;
-  margin-right: 4em;
+    font-size: .9rem;
+    line-height: 1;
+    text-align: center;
 }
+
 .source:before {
-  content: "—";
+    content: "—";
 }
+
+.nationality:before {
+    content: " (";
+}
+
+.profession:before {
+    content: " ";
+}
+
+.birth:before {
+    content: "; Birth: ";
+}
+
+.death:before {
+    content: ", Death: ";
+}
+
+.source:after {
+    content: ").";
+    font-style: normal;
+}
+
 .citation {
-  font-style: italic;
-}
-.citation:before {
-  content: ", ";
-  font-style: normal;
-}
-.year:before {
-  content: ", ";
-  font-style: normal;
+    font-size: .675rem;
+    line-height: 1;
+    font-style: italic;
+    text-align: center;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
 }
 
-#loadQuote {
-  position: fixed;
-  width: 12em;
-  display: inline-block;
-  left: 50%;
-  margin-left: -6em;
-  bottom: 150px;
-  border-radius: 4px;
-  border: 2px solid #fff;
-  color: #fff;
-  background-color: #36b55c;
-  padding: 15px 0;
-  transition: .5s ;
-}
-#loadQuote:hover {
-  background-color: rgba(255,255,255,.25);
-}
-#loadQuote:focus {
-  outline: none;
+.dateAccessed:before {
+    content: ", Accessed: ";
+    font-style: normal;
 }
 
-@media (max-width: 420px) {
-  .quote {
-    font-size: 2.5rem;
-  }
-  .quote:before, .quote:after {
-    font-size: 3rem;
-  }
-  .source {
-    font-size: 1rem;
-  }
+#btnContainer {
+    width: 70%;
+}
+
+#loadItem {
+    display: inline-block;
+    font-size: 50%;
+    width: 120px;
+    background: #FFEEEE;
+    color: #212121;
+    border-radius: 5px;
+    border: 2px solid #000;
+    font-size: .5rem;
+    padding: .5rem 0;
+    transition: .5s ;
+}
+
+#loadItem:hover {     
+    background: #FFFFFF;
+}
+
+#loadItem:focus {
+    outline: none;
+}
+
+#streamItem {
+    display: inline-block;
+    font-size: 50%;
+    width: 120px;
+    background: #FFEEEE;
+    color: #212121;
+    border-radius: 5px;
+    border: 2px solid #000;
+    font-size: .5rem;
+    padding: .5rem 0;
+    transition: .5s ;
+}
+
+#streamItem:hover {        
+    background: #FFFFFF;
+}
+
+#streamItem:focus {
+    outline: none;
+}
+
+/**********************************
+
+    Responsive CSS
+
+**********************************/
+
+@media (min-width: 481px) {     /* mid-size cell phones */
+    .quote {
+        font-size: 2rem;
+    }
+
+    .quote:before, .quote:after {
+        font-size: 2rem;
+    }
+
+    .source {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 768px) {     /* tablets & small laptops */
+    .quote {
+        font-size: 2.5rem;
+    }
+    .quote:before, .quote:after {
+        font-size: 3rem;
+    }
+    .source {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 1281px) {    /* large forat laptops and desktops */
+    #quoteItem{
+        border-radius:30px;
+    }
+    .quote {
+        font-size: 2.4rem;
+    } 
+
+    .source {
+        font-size: 1rem;
+    }
 }

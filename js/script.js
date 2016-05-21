@@ -1,4 +1,170 @@
-// event listener to respond to clicks on the page
-// when user clicks anywhere on the page, the "makeQuote" function is called
-document.getElementById('loadQuote').addEventListener("click", printQuote, false);
+/****************************************************************
+*****************************************************************
 
+	DECLARE - Global Variables
+
+*****************************************************************
+****************************************************************/
+
+// quotes Object - all the quotes & sources to be displayed
+
+var $quotes = [
+
+	{quote:'"Of two evils, choose neither."',source:"Charles H. Spurgeon",nationality:"British",vocation:"Clergyman",born:"6/19/1834",died:"1/31/1892",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/6/2016"},
+	{quote:'"A life spent making mistakes is not only more honorable, but more useful than a life spent doing nothing."',source:"George Bernard Shaw",nationality:"Irish",vocation:"Dramatist",born:"7/26/1856",died:"11/2/1950",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/6/2016"},
+	{quote:'"For what shall it profit a man, if he gain the whole world, and suffer the loss of his soul?"',source:"Jesus Christ",nationality:"Jewish",vocation:"Leader",born:"c. 4 BC",died:"c. 29 AD",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"},
+	{quote:'"It isn'+"'"+'t that they can'+"'"+'t see the solution. It is that they can'+"'"+'t see the problem."',source:"Gilbert K. Chesterton",nationality:"English",vocation:"Writer",born:"5/29/1874",died:"6/14/1936",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"},
+	{quote:'"Whenever you find yourself on the side of the majority, it is time to pause and reflect."',source:"Mark Twain",nationality:"American",vocation:"Author",born:"11/30/1835",died:"4/21/1910",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"},
+	{quote:'"The least productive people are usually the ones who are most in favor of holding meetings."',source:"Thomas Sowell",nationality:"American",vocation:"Economist",born:"6/30/1930",died:"living still",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"},
+	{quote:'"Truth that is not undergirded by love makes the truth obnoxious and the possessor of it repulsive."',source:"Ravi Zacharias",nationality:"American",vocation:"Author",born:"3/26/1946",died:"living still",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"},
+	{quote:'"You are never too old to set a new goal or dream another dream."',source:"C. S. Lewis",nationality:"Irish",vocation:"Author",born:"11/29/1898",died:"11/22/1963",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"},
+	{quote:'"Ignoring facts does not make them go away."',source:"Fran Tarkenton",nationality:"American",vocation:"Althete",born:"2/3/1940",died:"living still",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"}
+];
+
+// colors Object - all the color schemes to be used
+
+var $colors = [
+
+	{bkgd:"#F44336",text:"#4336F4",boxBkgd:"#36F443"},	//	red background
+	{bkgd:"#3F51B5",text:"#51B53F",boxBkgd:"#B53F51"},	//	indigo background
+	{bkgd:"#009688",text:"#968800",boxBkgd:"#880096"},	//	teal background
+	{bkgd:"#FFEB3B",text:"#EB3BFF",boxBkgd:"#3BFFEB"},	//	yellow background
+	{bkgd:"#607D8B",text:"#7D8B60",boxBkgd:"#8B607D"},	//	blue grey background
+	{bkgd:"#FF5722",text:"#5722FF",boxBkgd:"#22FF57"},	//	deep orange background
+	{bkgd:"#CDDC39",text:"#DC39CD",boxBkgd:"#39CDDC"},	//	lime background
+	{bkgd:"#03A9F4",text:"#A9F403",boxBkgd:"#F403A9"},	//	light blue background
+	{bkgd:"#FFC107",text:"#C107FF",boxBkgd:"#07FFC1"}	//	amber background
+];
+
+//	One off Global variables
+
+var q = -1						//	random number for quotes
+var $newQuote = '';				//	the body of the quote
+var $quoteTracker = '';			//	string built up from quote indices used
+var $s ='';						//	holds the string value of the random number (concatenated to $quoteTracker)
+var $quoteDisplayed = false;	//	test for a particular quote having been displayed
+var $streaming = false;			//	remains false if one-at-time mode turns true is streaming mode
+
+var $quote = '';			// text of the quote
+var $source = '';			// source/author of the quote
+var $nationality = '';		// nationality of the source
+var $vocation = '';			// vocation of the source
+var $born = '';				// birth date of the source
+var $died = '';				// date the source died or 'living still'
+var $citation = '';			// citation of the quote
+var $accessed = '';			//date accessed the quote
+
+/****************************************************************
+*****************************************************************
+
+	DECLARE - the functions
+
+*****************************************************************
+****************************************************************/
+
+function displayQuote() {		//	define display function
+
+	//	index into $quotes with q and extract variables
+
+	$quote = $quotes[q].quote;
+	$source = $quotes[q].source;
+	$nationality = $quotes[q].nationality;
+	$vocation = $quotes[q].vocation;
+	$born = $quotes[q].born;
+	$died = $quotes[q].died;
+	$citation = $quotes[q].citation;
+	$accessed = $quotes[q].accessed;
+
+	//	build html
+
+	var $p1 = '<div id=quoteItem><p class="quote">'+$quote+'</p>';
+	var $p2 = '<p class="source">'+$source+
+	'<span class="nationality">'+$nationality+
+	'</span><span class="profession">'+$vocation+
+	'</span><span class="birth">'+$born+
+	'</span><span class="death">'+$died+'</span></p>';
+	var $p3 = '<p class="citation">'+$citation+'<span class="dateAccessed">'+$accessed+'</span></p></div>';
+
+	$newQuote = $p1+$p2+$p3;
+
+	//	index into $colors with q and set colors
+
+	var $bkgd = $colors[q].bkgd;		//	body background-color
+	var $text = $colors[q].text;		//	quotebox text
+	var $boxBkgd = $colors[q].boxBkgd;	//	quotebox background color
+	var $boxShadow = $colors[q].text;	//	quotebox box-shadow
+
+	//	build html
+	
+	//	body backgound color 
+
+	var $bodyStyle = '<style>#bodyContainer {background-color: '+
+	$bkgd+'; width: 100%; height: 100%;}</style>';									//	set value of background color
+	var $quoteStyle = '<style>#quoteItem {background-color: '+$boxBkgd+'; color: '+
+	$text+'; box-shadow: 10px 10px 30px '+$boxShadow+';}</style>';				//	set value of quote box background, text color, shadow color
+
+	document.getElementById('bkgd').innerHTML = $bodyStyle;								//	modify HTML for page background
+	document.getElementById('quoteContainer').innerHTML = $newQuote+$quoteStyle;		//	modify HTML for quote box color-scheme
+
+	return;
+} 
+
+function getRandomQuote() {		// define getQuote function
+
+	//	generate random number q between 0 & 9 and only used once 
+	//	until all others are picked - for quotes
+
+	$quoteDisplayed = false		//	assume quote has not yet been displayed gets reset each click in one-at-a-time mode
+
+	while ($quoteTracker.length < 9 && ($quoteDisplayed == false || $streaming == true)) {
+		q = Math.floor((Math.random() * 9) + 1);
+		q-=1;
+		$s=q.toString();
+
+		if ($quoteTracker.search($s) == -1) {			//	test - if -1, quote not yet displayed
+			$quoteTracker=$quoteTracker+$s;				//	concatenate random number to tracker
+			var myDisplay = new displayQuote();			//	invoke displayQuote function
+			$quoteDisplayed=true;						//	set Displayed value to true
+		}
+	}
+	return;		//	return to invoker, could be loadItem click Event. Could be streamRandomQuotes function
+}
+
+function streamRandomQuotes() {			// define streamQuote function
+
+	$streaming = true;
+	while ($quoteTracker.length < 9) {							// stream unti all 9 quotes have been displayed
+
+	    setInterval(function(){getRandomQuote(); }, 1000);		// invoke getRandomQuote function
+	}
+	return;
+}
+
+function endOfQuotes() {		// define end of job function
+
+	var $endOfList = '<div class="endOfList"><p>You have reached the end of the Quotes</p></div>'
+	$endOfList=$endOfList+'<style>'+'.endOfList {'+'background-color: #FFEEEE;'+
+	' border: 2px solid black; border-radius: 10px; color: #212121; padding: 10px;}</style>'
+
+	document.getElementById('btnContainer').innerHTML = $endOfList;
+
+	return;
+}
+
+/*******************************************************************
+********************************************************************
+
+	Mainline Processing
+
+********************************************************************
+*******************************************************************/;
+
+document.getElementById('loadItem').addEventListener("click", getRandomQuote(), false);		// listen for click on random quote button
+
+document.getElementById('streamItem').addEventListener("click", streamRandomQuotes(), false);		// listen for click on steam quote button
+
+if ($quoteTracker.length == 9) {		//	when all quotes/color schemes have been used - notify user and quit
+
+	var jobEnd = new endOfQuotes();
+
+}
