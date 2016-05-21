@@ -15,10 +15,10 @@ var $quotes = [
 	{quote:'"For what shall it profit a man, if he gain the whole world, and suffer the loss of his soul?"',source:"Jesus Christ",nationality:"Jewish",vocation:"Leader",born:"c. 4 BC",died:"c. 29 AD",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"},
 	{quote:'"It isn'+"'"+'t that they can'+"'"+'t see the solution. It is that they can'+"'"+'t see the problem."',source:"Gilbert K. Chesterton",nationality:"English",vocation:"Writer",born:"5/29/1874",died:"6/14/1936",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"},
 	{quote:'"Whenever you find yourself on the side of the majority, it is time to pause and reflect."',source:"Mark Twain",nationality:"American",vocation:"Author",born:"11/30/1835",died:"4/21/1910",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"},
-	{quote:'"The least productive people are usually the ones who are most in favor of holding meetings."',source:"Thomas Sowell",nationality:"American",vocation:"Economist",born:"6/30/1930",died:"living still",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"},
-	{quote:'"Truth that is not undergirded by love makes the truth obnoxious and the possessor of it repulsive."',source:"Ravi Zacharias",nationality:"American",vocation:"Author",born:"3/26/1946",died:"living still",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"},
+	{quote:'"The least productive people are usually the ones who are most in favor of holding meetings."',source:"Thomas Sowell",nationality:"American",vocation:"Economist",born:"6/30/1930",died:"",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"},
+	{quote:'"Truth that is not undergirded by love makes the truth obnoxious and the possessor of it repulsive."',source:"Ravi Zacharias",nationality:"American",vocation:"Author",born:"3/26/1946",died:"",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"},
 	{quote:'"You are never too old to set a new goal or dream another dream."',source:"C. S. Lewis",nationality:"Irish",vocation:"Author",born:"11/29/1898",died:"11/22/1963",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"},
-	{quote:'"Ignoring facts does not make them go away."',source:"Fran Tarkenton",nationality:"American",vocation:"Althete",born:"2/3/1940",died:"living still",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"}
+	{quote:'"Ignoring facts does not make them go away."',source:"Fran Tarkenton",nationality:"American",vocation:"Althete",born:"2/3/1940",died:"",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"}
 ];
 
 // colors Object - all the color schemes to be used
@@ -50,7 +50,7 @@ var $source = '';			// source/author of the quote
 var $nationality = '';		// nationality of the source
 var $vocation = '';			// vocation of the source
 var $born = '';				// birth date of the source
-var $died = '';				// date the source died or 'living still'
+var $died = '';				// date the source died or ''
 var $citation = '';			// citation of the quote
 var $accessed = '';			//date accessed the quote
 
@@ -77,12 +77,17 @@ function displayQuote() {		//	define display function
 
 	//	build html
 
-	var $p1 = '<div id=quoteItem><p class="quote">'+$quote+'</p>';
+	var $p1 = '<div id="quoteItem"><p class="quote">'+$quote+'</p>';
 	var $p2 = '<p class="source">'+$source+
 	'<span class="nationality">'+$nationality+
 	'</span><span class="profession">'+$vocation+
-	'</span><span class="birth">'+$born+
-	'</span><span class="death">'+$died+'</span></p>';
+	'</span><span class="birth">'+$born+'</span><span class="death">';
+	if ($died.length == 0) {
+		$p2=$p2+'          ';
+	} else {
+		$p2=$p2+$died;
+	}
+	$p2=$p2+'</span></p>';
 	var $p3 = '<p class="citation">'+$citation+'<span class="dateAccessed">'+$accessed+'</span></p></div>';
 
 	$newQuote = $p1+$p2+$p3;
@@ -103,7 +108,10 @@ function displayQuote() {		//	define display function
 	var $quoteStyle = '<style>#quoteItem {background-color: '+$boxBkgd+'; color: '+
 	$text+'; box-shadow: 10px 10px 30px '+$boxShadow+';}</style>';				//	set value of quote box background, text color, shadow color
 
+	var myDebug = new debuggerCall();
+
 	document.getElementById('bkgd').innerHTML = $bodyStyle;								//	modify HTML for page background
+
 	document.getElementById('quoteContainer').innerHTML = $newQuote+$quoteStyle;		//	modify HTML for quote box color-scheme
 
 	return;
@@ -149,6 +157,11 @@ function endOfQuotes() {		// define end of job function
 	document.getElementById('btnContainer').innerHTML = $endOfList;
 
 	return;
+}
+
+function debuggerCall() {
+    debugger;
+    // do potentially buggy stuff to examine, step through, etc.
 }
 
 /*******************************************************************
