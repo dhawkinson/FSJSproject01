@@ -1,3 +1,4 @@
+
 /****************************************************************
 *****************************************************************
 
@@ -36,23 +37,23 @@ var $colors = [
 	{bkgd:"#FFC107",text:"#C107FF",boxBkgd:"#07FFC1"}	//	amber background
 ];
 
-//	One off Global variables
+//	One-off Global variables
 
-var q = -1						//	random number for quotes
+var q = -1;						//	random number for quotes
 var $newQuote = '';				//	the body of the quote
 var $quoteTracker = '';			//	string built up from quote indices used
 var $s ='';						//	holds the string value of the random number (concatenated to $quoteTracker)
 var $quoteDisplayed = false;	//	test for a particular quote having been displayed
 var $streaming = false;			//	remains false if one-at-time mode turns true is streaming mode
 
-var $quote = '';			// text of the quote
-var $source = '';			// source/author of the quote
-var $nationality = '';		// nationality of the source
-var $vocation = '';			// vocation of the source
-var $born = '';				// birth date of the source
-var $died = '';				// date the source died or ''
-var $citation = '';			// citation of the quote
-var $accessed = '';			//date accessed the quote
+var $quote = '';				// text of the quote
+var $source = '';				// source/author of the quote
+var $nationality = '';			// nationality of the source
+var $vocation = '';				// vocation of the source
+var $born = '';					// birth date of the source
+var $died = '';					// date the source died or ''
+var $citation = '';				// citation of the quote
+var $accessed = '';				//date accessed the quote
 
 /****************************************************************
 *****************************************************************
@@ -82,8 +83,8 @@ function displayQuote() {		//	define display function
 	'<span class="nationality">'+$nationality+
 	'</span><span class="profession">'+$vocation+
 	'</span><span class="birth">'+$born+'</span><span class="death">';
-	if ($died.length == 0) {
-		$p2=$p2+'          ';
+	if ($died.length === 0) {
+		$p2=$p2+'“'+new Array(10).join(' ')+'”';
 	} else {
 		$p2=$p2+$died;
 	}
@@ -104,11 +105,9 @@ function displayQuote() {		//	define display function
 	//	body backgound color 
 
 	var $bodyStyle = '<style>#bodyContainer {background-color: '+
-	$bkgd+'; width: 100%; height: 100%;}</style>';									//	set value of background color
+	$bkgd+'; width: 100%; height: 100%;}</style>';										//	set value of background color
 	var $quoteStyle = '<style>#quoteItem {background-color: '+$boxBkgd+'; color: '+
-	$text+'; box-shadow: 10px 10px 30px '+$boxShadow+';}</style>';				//	set value of quote box background, text color, shadow color
-
-	var myDebug = new debuggerCall();
+	$text+'; box-shadow: 10px 10px 30px '+$boxShadow+';}</style>';						//	set value of quote box background, text color, shadow color
 
 	document.getElementById('bkgd').innerHTML = $bodyStyle;								//	modify HTML for page background
 
@@ -122,16 +121,21 @@ function getRandomQuote() {		// define getQuote function
 	//	generate random number q between 0 & 9 and only used once 
 	//	until all others are picked - for quotes
 
-	$quoteDisplayed = false		//	assume quote has not yet been displayed gets reset each click in one-at-a-time mode
+	/*if ($quoteTracker.length < 9) {
+		$quoteDisplayed = false;						//	assume quote has not yet been displayed gets reset each click in one-at-a-time mode
+	}*/
+	
+	if ($quoteTracker.length < 9 /*&& ($quoteDisplayed === false || $streaming === true)*/) {
 
-	while ($quoteTracker.length < 9 && ($quoteDisplayed == false || $streaming == true)) {
 		q = Math.floor((Math.random() * 9) + 1);
 		q-=1;
 		$s=q.toString();
 
-		if ($quoteTracker.search($s) == -1) {			//	test - if -1, quote not yet displayed
+		if ($quoteTracker.search($s) === -1) {			//	test - if -1, quote not yet displayed
 			$quoteTracker=$quoteTracker+$s;				//	concatenate random number to tracker
-			var myDisplay = new displayQuote();			//	invoke displayQuote function
+
+			displayQuote();								//	invoke displayQuote function
+
 			$quoteDisplayed=true;						//	set Displayed value to true
 		}
 	}
@@ -141,27 +145,22 @@ function getRandomQuote() {		// define getQuote function
 function streamRandomQuotes() {			// define streamQuote function
 
 	$streaming = true;
-	while ($quoteTracker.length < 9) {							// stream unti all 9 quotes have been displayed
+	while ($quoteTracker.length < 9) {							// stream until all 9 quotes have been displayed
 
-	    setInterval(function(){getRandomQuote(); }, 1000);		// invoke getRandomQuote function
+	    getRandomQuote();														// invoke getRandomQuote function
 	}
 	return;
 }
 
 function endOfQuotes() {		// define end of job function
 
-	var $endOfList = '<div class="endOfList"><p>You have reached the end of the Quotes</p></div>'
+	var $endOfList = '<div class="endOfList"><p>You have reached the end of the Quotes</p></div>';
 	$endOfList=$endOfList+'<style>'+'.endOfList {'+'background-color: #FFEEEE;'+
-	' border: 2px solid black; border-radius: 10px; color: #212121; padding: 10px;}</style>'
+	' border: 2px solid black; border-radius: 10px; color: #212121; padding: 10px;}</style>';
 
 	document.getElementById('btnContainer').innerHTML = $endOfList;
 
 	return;
-}
-
-function debuggerCall() {
-    debugger;
-    // do potentially buggy stuff to examine, step through, etc.
 }
 
 /*******************************************************************
@@ -170,14 +169,23 @@ function debuggerCall() {
 	Mainline Processing
 
 ********************************************************************
-*******************************************************************/;
+*******************************************************************/
 
+// The next getElementById lines could have been solved as follows (inline in the HTML)
+
+//		<button id="loadItem" onclick="getRandomQuote()">Show Another Quote,/button>
+//      <button id="streamItem" onclick="streamRandomQuotes()">Stream Quotes</button>
+
+//		I made the decision to keep it external because;
+//			1. It is a best practice the keep js external if possible
+//			2. Only browser that will not handle this method is IE 8 and below
+//			3. Globally, the instance of IE 8 and below is < 1% of sites according to caniuse.com
+//debugger;
 document.getElementById('loadItem').addEventListener("click", getRandomQuote(), false);		// listen for click on random quote button
+//document.getElementById('streamItem').addEventListener("click", streamRandomQuotes(), false);		// listen for click on steam quote button
 
-document.getElementById('streamItem').addEventListener("click", streamRandomQuotes(), false);		// listen for click on steam quote button
+if ($quoteTracker.length === 9) {		//	when all quotes/color schemes have been used - notify user and quit
 
-if ($quoteTracker.length == 9) {		//	when all quotes/color schemes have been used - notify user and quit
-
-	var jobEnd = new endOfQuotes();
+	endOfQuotes();
 
 }
