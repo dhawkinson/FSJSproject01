@@ -18,7 +18,7 @@ body {         /*      background color randomly set   */
 #bodyContainer {           /* the body */
     display: flex;
     flex-flow: column wrap;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     align-content: center;
     height: 100%;          /* 1, 3 */
@@ -58,8 +58,7 @@ body {         /*      background color randomly set   */
     align-content: center;
 }
 
-#loadItem,          /* button shows quotes 1/click */
-#streamItem {       /* button streams all/click */
+#loadItem {       /* button */
     flex: 0 0 auto;
 }
 
@@ -129,12 +128,13 @@ body {         /*      background color randomly set   */
 
 #btnContainer {
     width: 70%;
+    padding-top: 2.5%;
 }
 
 #loadItem {
     display: inline-block;
     font-size: 50%;
-    width: 120px;
+    width: 140px;
     background: #FFEEEE;
     color: #212121;
     border-radius: 5px;
@@ -149,27 +149,6 @@ body {         /*      background color randomly set   */
 }
 
 #loadItem:focus {
-    outline: none;
-}
-
-#streamItem {
-    display: inline-block;
-    font-size: 50%;
-    width: 120px;
-    background: #FFEEEE;
-    color: #212121;
-    border-radius: 5px;
-    border: 2px solid #000;
-    font-size: .5rem;
-    padding: .5rem 0;
-    transition: .5s ;
-}
-
-#streamItem:hover {        
-    background: #FFFFFF;
-}
-
-#streamItem:focus {
     outline: none;
 }
 

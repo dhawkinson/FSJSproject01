@@ -1,4 +1,4 @@
-
+//	debugger;
 /****************************************************************
 *****************************************************************
 
@@ -39,19 +39,21 @@ var $colors = [
 
 //	One-off Global variables
 
+var $clickElement = '';			//	event listener
+var $timer = '';				//	display timer
 var q = -1;						//	random number for quotes
 var $newQuote = '';				//	the body of the quote
 var $quoteTracker = '';			//	string built up from quote indices used
 var $s ='';						//	holds the string value of the random number (concatenated to $quoteTracker)
 var $quoteDisplayed = false;	//	test for a particular quote having been displayed
-var $quote = '';				// text of the quote
-var $source = '';				// source/author of the quote
-var $nationality = '';			// nationality of the source
-var $vocation = '';				// vocation of the source
-var $born = '';					// birth date of the source
-var $died = '';					// date the source died or ''
-var $citation = '';				// citation of the quote
-var $accessed = '';				//date accessed the quote
+var $quote = '';				// 	text of the quote
+var $source = '';				// 	source/author of the quote
+var $nationality = '';			// 	nationality of the source
+var $vocation = '';				// 	vocation of the source
+var $born = '';					// 	birth date of the source
+var $died = '';					// 	date the source died or ''
+var $citation = '';				// 	citation of the quote
+var $accessed = '';				//	date accessed the quote
 
 /****************************************************************
 *****************************************************************
@@ -139,6 +141,17 @@ function getRandomQuote() {		// define getQuote function
 	return;		//	return to invoker, could be loadItem click Event. Could be streamRandomQuotes function
 }
 
+function clockStart() { 
+	if ($timer) return;
+	$timer = setInterval(getRandomQuote, 15000);
+}
+
+function clockStop() {
+	clearInterval($timer);
+	$timer = null;
+	return;
+}
+
 function endOfQuotes() {		// define end of job function
 
 	var $endOfList = '<div class="endOfList"><p>You have reached the end of the Quotes</p></div>';
@@ -146,6 +159,31 @@ function endOfQuotes() {		// define end of job function
 	' border: 2px solid black; border-radius: 10px; color: #212121; padding: 10px;}</style>';
 
 	document.getElementById('btnContainer').innerHTML = $endOfList;
-
 	return;
 }
+
+/******************************************************************
+*******************************************************************
+
+	Main Processing
+
+*******************************************************************
+******************************************************************/
+//
+//	I could have used HTML inline coding for the click event as follows:
+//
+//		<button id="loadItem" onclick="getRandomQuote()">Show Another Quote</button>
+//
+//	I made the decision to use the external (js) call to the click handler for the following reasons
+//
+//		1. It is a best pratcie to use external js when possible
+//		2. The only browser for which the approach will not work is IE 8 and below
+//		3. According to stats from caniuse.com the coverage is over 95% in the US and over 94% globally
+//
+//	I am documenting this so I will remember it later.
+
+$clickElement = document.getElementById("loadItem");
+$clickElement.addEventListener("click", getRandomQuote, false);
+
+clockStart();
+
