@@ -7,7 +7,7 @@
 *****************************************************************
 ****************************************************************/
 
-// quotes Object - all the quotes & sources to be displayed
+// quotes Array - all the quotes & sources to be displayed
 
 var $quotes = [
 
@@ -22,7 +22,7 @@ var $quotes = [
 	{quote:'"Ignoring facts does not make them go away."',source:"Fran Tarkenton",nationality:"American",vocation:"Althete",born:"2/3/1940",died:"",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/9/2016"}
 ];
 
-// colors Object - all the color schemes to be used
+// colors Array - all the color schemes to be used
 
 var $colors = [
 
@@ -44,8 +44,6 @@ var $newQuote = '';				//	the body of the quote
 var $quoteTracker = '';			//	string built up from quote indices used
 var $s ='';						//	holds the string value of the random number (concatenated to $quoteTracker)
 var $quoteDisplayed = false;	//	test for a particular quote having been displayed
-var $streaming = false;			//	remains false if one-at-time mode turns true is streaming mode
-
 var $quote = '';				// text of the quote
 var $source = '';				// source/author of the quote
 var $nationality = '';			// nationality of the source
@@ -121,35 +119,24 @@ function getRandomQuote() {		// define getQuote function
 	//	generate random number q between 0 & 9 and only used once 
 	//	until all others are picked - for quotes
 
-	/*if ($quoteTracker.length < 9) {
-		$quoteDisplayed = false;						//	assume quote has not yet been displayed gets reset each click in one-at-a-time mode
-	}*/
+	$quoteDisplayed = false;							//	assume quote has not yet been displayed
 	
-	if ($quoteTracker.length < 9 /*&& ($quoteDisplayed === false || $streaming === true)*/) {
+	if ($quoteTracker.length < 9) {						// Tracker.length < 9 until all quotes have been displayed
+		do {
+			q = Math.floor((Math.random() * 9) + 1);
+			q-=1;
+			$s=q.toString();
 
-		q = Math.floor((Math.random() * 9) + 1);
-		q-=1;
-		$s=q.toString();
-
-		if ($quoteTracker.search($s) === -1) {			//	test - if -1, quote not yet displayed
-			$quoteTracker=$quoteTracker+$s;				//	concatenate random number to tracker
-
-			displayQuote();								//	invoke displayQuote function
-
-			$quoteDisplayed=true;						//	set Displayed value to true
-		}
+			if ($quoteTracker.search($s) === -1) {			//	test - if -1, quote not yet displayed
+				$quoteTracker=$quoteTracker+$s;				//	concatenate random number to tracker
+				displayQuote();								//	invoke displayQuote function
+				$quoteDisplayed=true;						//	set Displayed value for next test
+			} 
+		} while ($quoteDisplayed === false);
+	} else {
+		endOfQuotes();
 	}
 	return;		//	return to invoker, could be loadItem click Event. Could be streamRandomQuotes function
-}
-
-function streamRandomQuotes() {			// define streamQuote function
-
-	$streaming = true;
-	while ($quoteTracker.length < 9) {							// stream until all 9 quotes have been displayed
-
-	    getRandomQuote();														// invoke getRandomQuote function
-	}
-	return;
 }
 
 function endOfQuotes() {		// define end of job function
@@ -161,31 +148,4 @@ function endOfQuotes() {		// define end of job function
 	document.getElementById('btnContainer').innerHTML = $endOfList;
 
 	return;
-}
-
-/*******************************************************************
-********************************************************************
-
-	Mainline Processing
-
-********************************************************************
-*******************************************************************/
-
-// The next getElementById lines could have been solved as follows (inline in the HTML)
-
-//		<button id="loadItem" onclick="getRandomQuote()">Show Another Quote,/button>
-//      <button id="streamItem" onclick="streamRandomQuotes()">Stream Quotes</button>
-
-//		I made the decision to keep it external because;
-//			1. It is a best practice the keep js external if possible
-//			2. Only browser that will not handle this method is IE 8 and below
-//			3. Globally, the instance of IE 8 and below is < 1% of sites according to caniuse.com
-//debugger;
-document.getElementById('loadItem').addEventListener("click", getRandomQuote(), false);		// listen for click on random quote button
-//document.getElementById('streamItem').addEventListener("click", streamRandomQuotes(), false);		// listen for click on steam quote button
-
-if ($quoteTracker.length === 9) {		//	when all quotes/color schemes have been used - notify user and quit
-
-	endOfQuotes();
-
 }
