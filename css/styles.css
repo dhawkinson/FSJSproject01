@@ -28,7 +28,6 @@ body {         /*      background color randomly set   */
 #btnContainer {             /* contains the buttons (load & stream) */
     flex: 0 0 auto;         /* 2 */
     width:80%;
-    padding: 5%;
     overflow: auto;
 }
 
@@ -68,10 +67,13 @@ body {         /*      background color randomly set   */
 
 ********************************/
 
+#quoteContainer {
+    border-radius: 10px;
+    margin-top: 5rem;
+}
 #quoteItem {     /*      colors of background, text and shadow randomly set   */
     -webkit-filter: brightness(1.5) saturate(1);
     filter: brightness(1.5) saturate(1);
-    border-radius: 10px;
 }
 .quote {
     font-size: 1.2rem;
@@ -128,7 +130,7 @@ body {         /*      background color randomly set   */
 
 #btnContainer {
     width: 70%;
-    padding-top: 2.5%;
+    margin-top: 5rem;
 }
 
 #loadItem {
@@ -184,9 +186,10 @@ body {         /*      background color randomly set   */
     }
 }
 
-@media (min-width: 1281px) {    /* large forat laptops and desktops */
-    #quoteItem{
-        border-radius:30px;
+@media (min-width: 1281px) {    /* large format laptops and desktops */
+    #quoteContainer {
+        border-radius: 30px;
+        margin-top: 5rem;
     }
     .quote {
         font-size: 2.4rem;
