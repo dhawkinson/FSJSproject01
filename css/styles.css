@@ -26,7 +26,7 @@ body {         /*      background color randomly set   */
 
 #quoteContainer,            /* contains the quote text */
 #btnContainer {             /* contains the buttons (load & stream) */
-    flex: 0 0 auto;         /* 2 */
+    flex: none;             /* 2 */
     width:80%;
     overflow: auto;
 }
@@ -46,7 +46,7 @@ body {         /*      background color randomly set   */
 }
 
 #quoteItem {    /* comprised of quote, source & cotation */
-    flex: 0 0 auto;
+    flex: none;
 }
 
 #btnContainer {    /* contains load * stream buttons */
@@ -58,7 +58,7 @@ body {         /*      background color randomly set   */
 }
 
 #loadItem {       /* button */
-    flex: 0 0 auto;
+    flex: none;
 }
 
 /********************************

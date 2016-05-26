@@ -90,13 +90,12 @@ function displayQuote() {		//	define display function
 
 	//	build html - body backgound color, quote content & quote style
 
-	var $bodyStyle = 'background-color: '+$bkgd+'; width: 100%; height: 100%;}</style>';	//	set value of background color
+	var $bodyStyle = 'background-color: '+$bkgd+'; width: 100%; height: 100%';	/*	set value of background color */
 	var $quoteStyle = 'background-color: '+$boxBkgd+'; color: '+
-	$text+'; box-shadow: 10px 10px 30px '+$boxShadow;										//	set value of quote box background, text color, shadow color
-
-	document.getElementById('bodyContainer').style = $bodyStyle;							//	modify HTML for page background
-	document.getElementById('quoteContainer').innerHTML = $newQuote;						//	modify HTML for quote content
-	document.getElementById('quoteContainer').style = $quoteStyle;							//	modify HTML for quote box color-scheme
+	$text+'; box-shadow: 10px 10px 30px '+$boxShadow;							/*	set value of quote box background, text color, shadow color */
+	document.getElementById('bodyContainer').setAttribute('style',$bodyStyle);	/*	modify HTML for page background */
+	document.getElementById('quoteContainer').innerHTML = $newQuote;			/*	modify HTML for quote content */
+	document.getElementById('quoteContainer').setAttribute('style',$quoteStyle);/*	modify HTML for quote box color-scheme */
 
 	return;
 } 
