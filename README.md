@@ -1,5 +1,5 @@
 # FSJSproject01
-Full Stack Java Script Project 01 - Treehouse TechDegree
+Full Stack Java Script Project 01 - Treehouse TechDegree Program
 
 In this project you'll create a random quote generator to display quotations on the screen after a button on the page is clicked: for example, display a quote from a famous athlete, politician, or historical figure like:
 
