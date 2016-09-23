@@ -69,7 +69,7 @@ body {         /*      background color randomly set   */
 
 #quoteContainer {
     border-radius: 10px;
-    margin-top: 5rem;
+    margin-top: 5rem;       /*  use rem instead of % - avoids Firefox bug */
 }
 #quoteItem {     /*      colors of background, text and shadow randomly set   */
     -webkit-filter: brightness(1.5) saturate(1);
@@ -135,7 +135,6 @@ body {         /*      background color randomly set   */
 
 #loadItem {
     display: inline-block;
-    font-size: 50%;
     width: 140px;
     background: #FFEEEE;
     color: #212121;

@@ -9,7 +9,7 @@
 
 // quotes Array - all the quotes & sources to be displayed
 
-var $quotes = [
+var quotes = [
 
 	{quote:'"Of two evils, choose neither."',source:"Charles H. Spurgeon",nationality:"British",vocation:"Clergyman",born:"6/19/1834",died:"1/31/1892",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/6/2016"},
 	{quote:'"A life spent making mistakes is not only more honorable, but more useful than a life spent doing nothing."',source:"George Bernard Shaw",nationality:"Irish",vocation:"Dramatist",born:"7/26/1856",died:"11/2/1950",citation:"BrainyQuote.com, Xplore Inc, 2016. http://www.brainyquote.com...",accessed:"5/6/2016"},
@@ -24,7 +24,7 @@ var $quotes = [
 
 // colors Array - all the color schemes to be used
 
-var $colors = [
+var colors = [
 
 	{bkgd:"#F44336",text:"#4336F4",boxBkgd:"#36F443"},	//	red background
 	{bkgd:"#3F51B5",text:"#51B53F",boxBkgd:"#B53F51"},	//	indigo background
@@ -39,9 +39,9 @@ var $colors = [
 
 //	One-off Global variables
 
-var $timer = '';				//	display timer
+var timer = '';    				//	display timer
 var q = -1;						//	random number for quotes
-var $quoteTracker = '';			//	string built up from quote indices used
+var quoteTracker = '';			//	string built up from quote indices used
 
 /****************************************************************
 *****************************************************************
@@ -53,49 +53,51 @@ var $quoteTracker = '';			//	string built up from quote indices used
 
 function displayQuote() {		//	define display function
 
-	//	index into $quotes with q and extract variables
+	//	index into quotes with q and extract variables
 
-	var $quote = $quotes[q].quote;				//	the text of the quote
-	var $source = $quotes[q].source;			//	the source/author of the quote
-	var $nationality = $quotes[q].nationality;	//	the nationality of the source
-	var $vocation = $quotes[q].vocation;		//	the vocation of the source
-	var $born = $quotes[q].born;				//	the birthdate of the source
-	var $died = $quotes[q].died;				//	the death date of the source
-	var $citation = $quotes[q].citation;		//	the citation for the quote
-	var $accessed = $quotes[q].accessed;		//	date the quote was found
+	var quote = quotes[q].quote;			//	the text of the quote
+	var source = quotes[q].source;			//	the source/author of the quote
+	var nationality = quotes[q].nationality;//	the nationality of the source
+	var vocation = quotes[q].vocation;		//	the vocation of the source
+	var born = quotes[q].born;				//	the birthdate of the source
+	var died = quotes[q].died;				//	the death date of the source
+	var citation = quotes[q].citation;		//	the citation for the quote
+	var accessed = quotes[q].accessed;		//	date the quote was found
 
 	//	build html
 
-	var $p1 = '<div id="quoteItem"><p class="quote">'+$quote+'</p>';
-	var $p2 = '<p class="source">'+$source+
-	'<span class="nationality">'+$nationality+
-	'</span><span class="profession">'+$vocation+
-	'</span><span class="birth">'+$born+'</span><span class="death">';
-	if ($died.length === 0) {
-		$p2=$p2+'“'+new Array(10).join(' ')+'”';
+	var p1 = '<div id="quoteItem"><p class="quote">'+quote+'</p>';
+	var p2 = '<p class="source">'+source+
+	'<span class="nationality">'+nationality+
+	'</span><span class="profession">'+vocation+
+	'</span><span class="birth">'+born+'</span><span class="death">';
+	if (died.length === 0) {
+		p2=p2+'“'+new Array(10).join(' ')+'”';
 	} else {
-		$p2=$p2+$died;
+		p2=p2+died;
 	}
-	$p2=$p2+'</span></p>';
-	var $p3 = '<p class="citation">'+$citation+'<span class="dateAccessed">'+$accessed+'</span></p></div>';
+	p2=p2+'</span></p>';
+	var p3 = '<p class="citation">'+citation+'<span class="dateAccessed">'+accessed+'</span></p></div>';
 
-	var $newQuote = $p1+$p2+$p3;				//	the body of the quote
+	var newQuote = p1+p2+p3;				//	the body of the quote
 
-	//	index into $colors with q and set colors
+	//	index into colors with q and set colors
 
-	var $bkgd = $colors[q].bkgd;		//	body background-color
-	var $text = $colors[q].text;		//	quotebox text
-	var $boxBkgd = $colors[q].boxBkgd;	//	quotebox background color
-	var $boxShadow = $colors[q].text;	//	quotebox box-shadow
+	var bkgd = colors[q].bkgd;		//	body background-color
+	var text = colors[q].text;		//	quotebox text
+	var boxBkgd = colors[q].boxBkgd;	//	quotebox background color
+	var boxShadow = colors[q].text;	//	quotebox box-shadow
 
 	//	build html - body backgound color, quote content & quote style
 
-	var $bodyStyle = 'background-color: '+$bkgd+'; width: 100%; height: 100%';	/*	set value of background color */
-	var $quoteStyle = 'background-color: '+$boxBkgd+'; color: '+
-	$text+'; box-shadow: 10px 10px 30px '+$boxShadow;							/*	set value of quote box background, text color, shadow color */
-	document.getElementById('bodyContainer').setAttribute('style',$bodyStyle);	/*	modify HTML for page background */
-	document.getElementById('quoteContainer').innerHTML = $newQuote;			/*	modify HTML for quote content */
-	document.getElementById('quoteContainer').setAttribute('style',$quoteStyle);/*	modify HTML for quote box color-scheme */
+	var bodyStyle = 'background-color: '+bkgd+'; width: 100%; height: 100%';	//	set value of background color 
+	var quoteStyle = 'background-color: '+boxBkgd+'; color: '+
+	text+'; box-shadow: 10px 10px 30px '+boxShadow;								//	set value of quote box background, text color, shadow color
+	// .setAttribute avoids Safari limitation of one style element in a .style
+	document.getElementById('bodyContainer').setAttribute('style',bodyStyle);	//	modify HTML for page background 
+	document.getElementById('quoteContainer').innerHTML = newQuote;				//	modify HTML for quote content
+	
+	document.getElementById('quoteContainer').setAttribute('style',quoteStyle);	//	modify HTML for quote box color-scheme 
 
 	return;
 } 
@@ -105,20 +107,20 @@ function getRandomQuote() {		// define getQuote function
 	//	generate random number q between 0 & 9 and only used once 
 	//	until all others are picked - for quotes
 
-	var $quoteDisplayed = false;						//	assume quote has not yet been displayed
+	var quoteDisplayed = false;						//	assume quote has not yet been displayed
 	
-	if ($quoteTracker.length < 9) {						// Tracker.length < 9 until all quotes have been displayed
+	if (quoteTracker.length < 9) {						// Tracker.length < 9 until all quotes have been displayed
 		do {
 			q = Math.floor((Math.random() * 9) + 1);
 			q-=1;
-			var $s=q.toString();
+			var s=q.toString();
 
-			if ($quoteTracker.search($s) === -1) {		//	test - if -1, quote not yet displayed
-				$quoteTracker=$quoteTracker+$s;			//	concatenate random number to tracker
+			if (quoteTracker.search(s) === -1) {		//	test - if -1, quote not yet displayed
+				quoteTracker=quoteTracker+s;			//	concatenate random number to tracker
 				displayQuote();							//	invoke displayQuote function
-				$quoteDisplayed=true;					//	set Displayed value for next test
+				quoteDisplayed=true;					//	set Displayed value for next test
 			} 
-		} while ($quoteDisplayed === false);
+		} while (quoteDisplayed === false);
 	} else {
 		endOfQuotes();
 	}
@@ -126,23 +128,23 @@ function getRandomQuote() {		// define getQuote function
 }
 
 function clockStart() { 
-	if ($timer) return;
-	$timer = setInterval(getRandomQuote, 30000);
+	if (timer) return;
+	timer = setInterval(getRandomQuote, 5000);
 }
 
 function clockStop() {
-	clearInterval($timer);
-	$timer = null;
+	clearInterval(timer);
+	timer = null;
 	return;
 }
 
 function endOfQuotes() {		// define end of job function
 
-	var $endOfList = '<div class="endOfList"><p>You have reached the end of the Quotes</p></div>';
-	$endOfList=$endOfList+'<style>'+'.endOfList {'+'background-color: #FFEEEE;'+
+	var endOfList = '<div class="endOfList"><p>You have reached the end of the Quotes</p></div>';
+	endOfList=endOfList+'<style>'+'.endOfList {'+'background-color: #FFEEEE;'+
 	' border: 2px solid black; border-radius: 10px; color: #212121; padding: 10px;}</style>';
 
-	document.getElementById('btnContainer').innerHTML = $endOfList;
+	document.getElementById('btnContainer').innerHTML = endOfList;
 
 	clockStop();
 
@@ -171,8 +173,8 @@ function endOfQuotes() {		// define end of job function
 
 //debugger;
 
-var $clickElement = document.getElementById("loadItem");
-$clickElement.addEventListener("click", getRandomQuote, false);
+var clickElement = document.getElementById("loadItem");
+clickElement.addEventListener("click", getRandomQuote, false);
 
 clockStart();
 
